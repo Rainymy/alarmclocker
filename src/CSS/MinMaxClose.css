@@ -1,0 +1,80 @@
+:root {
+  --var-close-deg: 45deg;
+}
+.app-div {
+  display: flex;
+  justify-content: flex-end;
+  --var-background-color: rgba(135, 206, 235, 1);
+}
+
+.app-buttons {
+  position: relative;
+  width: 1.75rem;
+  height: 1.5rem;
+  margin-left: 2px;
+  background-color: var(--var-background-color);
+}
+
+.app-buttons:hover {
+  background-color: skyblue;
+  opacity: 85%;
+}
+
+.app-buttons:active {
+  opacity: 50%;
+}
+/*------------ Buttons General -----------*/
+.b-red:hover {
+  background-color: red !important;
+}
+
+/*--------------- Minimize ---------------*/
+.mini::after, .mini::before {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  content: "";
+  height: 1.5px;
+  width: 50%;
+  background-color: black;
+}
+/*--------------- Maximize ---------------*/
+.maxi::before {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  content: "";
+  height: 50%;
+  width: 50%;
+  background-color: black;
+}
+.maxi::after {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  content: "";
+  height: calc(50% - 4px);
+  width: calc(50% - 4px);
+  background-color: skyblue;
+}
+/*----------------- Close -----------------*/
+.close::after, .close::before {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  content: "";
+  height: 1.5px;
+  width: 50%;
+  background-color: black;
+}
+
+.close::after {
+  transform: translate(50%, -50%) rotate(var(--var-close-deg));
+}
+
+.close::before {
+  transform: translate(50%, -50%) rotate(calc(90deg + var(--var-close-deg)));
+}
