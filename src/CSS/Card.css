@@ -1,0 +1,39 @@
+.card {
+  --card-width: 250px;
+  --card-height: 300px;
+  --card-overlay: calc(var(--card-width) / 3);
+  
+  z-index: 1;
+  background-color: grey;
+  min-width: var(--card-width);
+  height: var(--card-height);
+  
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  
+  border: solid 1px #333;
+  box-shadow: -1rem 0 3rem #333;
+  
+  transition: all 0.325s ease-in-out;
+}
+.card:hover ~.card {
+  transform: translateX(var(--card-overlay));
+}
+
+.card:not(:first-child) {
+  margin-left: calc(-1 * var(--card-overlay));
+}
+
+.card-body {
+  position: relative;
+  margin: auto;
+  width: 225px;
+  height: 225px;
+}
+
+.card-timer {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -100%);
+}

@@ -1,0 +1,29 @@
+.input-section {
+  margin: auto;
+  padding: 0.5rem;
+  border: solid 1px green;
+}
+
+.input-section input {
+  max-width: 150px;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+}
+.input-section input[type="number"] {
+  width: 75px;
+}
+
+.input-section button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  /* border: 0; */
+}
+
+.preview {
+  float: right;
+  background-color: skyblue;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  position: relative;
+  /* border: 0; */
+}

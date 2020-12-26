@@ -1,7 +1,7 @@
 import React from 'react';
 import "../CSS/MinMaxClose.css";
 
-class Nav extends React.Component {
+class MinMaxClose extends React.Component {
   render() {
     return (
       <div className="app-div">
@@ -18,4 +18,4 @@ class Nav extends React.Component {
     );
   }
 }
-export default Nav;
+export default MinMaxClose;

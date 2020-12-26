@@ -1,33 +1,42 @@
-:root {
-  --var-close-deg: 45deg;
-}
 .app-div {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   justify-content: flex-end;
-  --var-background-color: rgba(135, 206, 235, 1);
+  --button-height: 1.5rem;
+  --button-width: 1.75rem;
+  height: var(--app-div-height, --button-height);
 }
 
 .app-buttons {
+  --opacity-0: 0;
+  --opacity-25: 0.25;
+  --opacity-50: 0.5;
+  --opacity-75: 0.75;
+  --opacity-100: 1;
+  --background-color: 135, 206, 235;
   position: relative;
-  width: 1.75rem;
-  height: 1.5rem;
+  width: var(--button-width);
+  height: var(--button-height);
   margin-left: 2px;
-  background-color: var(--var-background-color);
+  background-color: rgba(var(--background-color), var(--opacity-100));
 }
 
 .app-buttons:hover {
-  background-color: skyblue;
-  opacity: 85%;
+  background-color: rgba(var(--background-color), var(--opacity-75));
 }
 
 .app-buttons:active {
-  opacity: 50%;
+  background-color: rgba(var(--background-color), var(--opacity-50));
 }
 /*------------ Buttons General -----------*/
 .b-red:hover {
-  background-color: red !important;
+  background-color: rgba(230, 50, 0, 1) !important;
 }
-
+.b-red:active {
+  background-color: rgba(230, 0, 0, 0.75) !important;
+}
 /*--------------- Minimize ---------------*/
 .mini::after, .mini::before {
   position: absolute;
@@ -40,17 +49,7 @@
   background-color: black;
 }
 /*--------------- Maximize ---------------*/
-.maxi::before {
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
-  content: "";
-  height: 50%;
-  width: 50%;
-  background-color: black;
-}
-.maxi::after {
+.maxi::after, .maxi::before {
   position: absolute;
   top: 50%;
   right: 50%;
@@ -58,9 +57,12 @@
   content: "";
   height: calc(50% - 4px);
   width: calc(50% - 4px);
-  background-color: skyblue;
+  border: solid 1.5px black;
 }
 /*----------------- Close -----------------*/
+.close {
+  --close-deg: 45deg;
+}
 .close::after, .close::before {
   position: absolute;
   top: 50%;
@@ -72,9 +74,10 @@
 }
 
 .close::after {
-  transform: translate(50%, -50%) rotate(var(--var-close-deg));
+  transform: translate(50%, -50%) rotate(var(--close-deg));
 }
 
 .close::before {
-  transform: translate(50%, -50%) rotate(calc(90deg + var(--var-close-deg)));
+  transform: translate(50%, -50%) rotate(calc(90deg + var(--close-deg)));
 }
+/*-----------------------------------------*/
