@@ -4,10 +4,11 @@
   --card-overlay: calc(var(--card-width) / 3);
   
   z-index: 1;
-  background-color: grey;
+  background-color: lightgrey;
   min-width: var(--card-width);
   height: var(--card-height);
   
+  margin: auto;
   padding: 0.5rem;
   border-radius: 0.5rem;
   

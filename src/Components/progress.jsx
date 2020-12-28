@@ -1,10 +1,12 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 
 import "../CSS/Progress.css";
 
 function Progress(props) {
   
   const [ degree, setDegree ] = useState(90);
+  
+  const yep = useRef({ mounted: false });
   
   function getStyling(a, b) {
     return { transform: `rotate(-${a}deg) skew(${b}deg)` };
@@ -34,6 +36,18 @@ function Progress(props) {
     return [testSeg[index], ...acc];
   }
   
+  useEffect(() => {
+    if (yep.current.mounted) {
+      if (props.percentage <= 0) {
+        setDegree(v => 90);
+      }
+      else {
+        setDegree(v => Math.round(((props.percentage * 360) % 90) - 3.6));
+      }
+    }
+    yep.current.mounted = true;
+  }, [props.percentage]);
+  
   return (
     <Fragment>
       <div className="circle-wrapper">
@@ -44,10 +58,10 @@ function Progress(props) {
         </div>
         <div className="circle-inner"></div>
       </div>
-      <button onMouseDown={() => setDegree(degree - 3)}>Degree up</button>
+      {/* <button onMouseDown={() => setDegree(degree - 3)}>Degree up</button>
       <button onMouseDown={() => setDegree(degree + 3)}>Degree down</button>
       <div>Degrees: { degree }</div>
-      <div>Percentage: { props.percentage }</div>
+      <div>Percentage: { props.percentage }</div> */}
     </Fragment>
   );
 }

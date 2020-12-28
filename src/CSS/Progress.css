@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 .circle-inner {
-  background-color: green;
+  background-color: powderblue;
   position: absolute;
   border-radius: 50%;
   width: calc(100% - 1.25rem);
@@ -19,19 +19,20 @@
   margin: auto;
 }
 .segment-wrapper {
+  background-color: skyblue;
   position: relative;
   width: inherit;
   height: inherit;
   transform: rotate(180deg);
 }
 .segment {
-  transform: rotate(180deg);
   position: absolute;
   width: 400px;
   height: 400px;
   top: 50%;
   left: 50%;
-  background-color: blue;
+  background-color: teal;
   transform-origin: top left;
   transform: rotate(-180deg) skew(0deg, 90deg);
+  transition: all 0.25s ease-in
 }

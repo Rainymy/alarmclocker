@@ -6,10 +6,10 @@ import './App.css';
 function App() {
   return (
     <>
-    <MinMaxClose/>
-    <div className="App">
-      <Main/>
-    </div>
+      <MinMaxClose/>
+      <div className="App">
+        <Main/>
+      </div>
     </>
   );
 }

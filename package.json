@@ -1,14 +1,14 @@
 {
   "name": "alarmclocker",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "public/electron.js",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "concurrently": "^5.3.0",
-    "electron": "^11.1.0",
     "electron-is-dev": "^1.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
@@ -19,7 +19,10 @@
   },
   "scripts": {
     "live": "concurrently \"SET BROWSER=none&&npm run start\" \"wait-on http://localhost:3000 && electron .\"",
+    "live-electron": "electron .",
+    "dist": "electron-builder",
     "start": "react-scripts start",
+    "package": "npm run build && npm run dist",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,5 +44,24 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "build": {
+    "appId": "noId",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "target": [
+      {
+        "target": "nsis"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1"
   }
 }

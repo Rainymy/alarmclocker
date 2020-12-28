@@ -1,5 +1,4 @@
 main {
-  border: solid 1px black;
   height: calc(100% - var(--app-div-height, 0px));
   height: 100%;
 }
@@ -8,8 +7,10 @@ main {
   display: flex;
   flex-direction: row;
   position: relative;
-  border: solid 1px blue;
+  margin: auto;
   width: 450px;
-  height: 400px;
+  min-height: 400px;
+  height: calc(100% - var(--app-div-height, 0px) * 2);
   overflow-x: auto;
+  overflow-y: auto;
 }
