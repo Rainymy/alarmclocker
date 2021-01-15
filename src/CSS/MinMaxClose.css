@@ -109,7 +109,7 @@
 .app-logo > img {
   margin: auto;
   
-  width: 100%;
+  width: auto;
   height: auto;
   
   max-width:  100%;

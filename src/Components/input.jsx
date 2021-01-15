@@ -1,38 +1,17 @@
 import { useState } from 'react';
+import uuid from "../JS/generator";
 import "../CSS/Input.css";
 
 function Nav(props) {
   const [ title, setTitle ] = useState(undefined);
   const [ time, setTime ] = useState(1);
   
-  function generateNewId(idLength) {
-    idLength = idLength || 12;
-    
-    function generator() {
-      return Math.random().toString(36).substring(2);
-    }
-    
-    let newId = generator();
-    
-    if (idLength > newId.length) {
-      if (Math.floor(idLength - newId.length) === 0) {
-        newId += generator();
-      }
-      else {
-        for (let i = 0; i < Math.floor(idLength / newId.length); i++) {
-          newId += generator();
-        };
-      }
-    }
-    
-    return newId.substring(0, idLength);
-  }
-  
   function getValueFromInput(event) {
     return props.toParent({
       title, time,
       startTime: new Date().valueOf(),
-      id: generateNewId()
+      id: uuid(),
+      isFinished: false
     });
   }
   

@@ -7,18 +7,35 @@ import doneSound from "../sound/done.wav";
 
 function Card( props ) {
   
-  // console.log(props.changeData);
   const initialTime = props.data.time * 60;
   
   const [ timeLeft, setTimeLeft ] = useState(initialTime);
   const [ timeText, setTimeText ] = useState({});
   const [ percentage, setPercentage ] = useState(1);
   
+  const [ editMode, setEditMode ] = useState(false);
+  
   const container = useRef({
     time: timeLeft,
     initial: timeLeft,
-    id: props.data.id
+    id: props.data.id,
+    isFinished: props.data.isFinished,
+    startCountDown: null,
+    data: {}
   });
+  
+  container.current.isFinished = props.data.isFinished;
+  
+  useEffect(() => {
+    if (editMode) {
+      console.log("Clock Paused");
+      clearInterval(container.current.intervalId);
+    }
+    else {
+      console.log("Clock resumed");
+      container.current.intervalId = setInterval(container.current.startCountDown, 1000);
+    }
+  }, [editMode]);
   
   useEffect(() => {
     
@@ -26,7 +43,10 @@ function Card( props ) {
     
     function startCountDown() {
       
-      // console.log(currentRef);
+      if (currentRef.isFinished) {
+        currentRef.time = 0;
+      }
+      
       currentRef.time -= (Date.now() - start) / 1000;
       
       setPercentage(v => 1 * (currentRef.time / currentRef.initial).toFixed(2));
@@ -35,6 +55,7 @@ function Card( props ) {
       
       if (currentRef.time <= 0) {
         console.log("Stopped Count Down");
+        currentRef.isFinished = true;
         return clearInterval(currentRef.intervalId);
       }
       start = Date.now();
@@ -51,18 +72,46 @@ function Card( props ) {
       }
     }
     
-    currentRef.intervalId = setInterval(startCountDown, 1000);
+    currentRef.startCountDown = startCountDown;
+    currentRef.intervalId = setInterval(currentRef.startCountDown, 1000);
     
     return () => clearInterval(currentRef.intervalId);
   }, []);
   
   function buttonHandler() {
-    props.changeData(container.current.id);
+    props.callbackParent.remove(container.current.id);
   }
   
-  function onPlayHanler(event) {
-    return event.target.volume = 0.10;
+  async function editHandler() {
+    let data = await props.callbackParent.getDataById(container.current.id);
+    if (JSON.stringify(container.current.data) !== JSON.stringify(data)) {
+      container.current.data = data;
+    }
+    if (data) {
+      setEditMode(v => !v);
+    }
+    // data.isFinished = true;
+    // props.callbackParent.changeDataWithId(data.id, data);
   }
+  
+  function changeBack(event) {
+    event.preventDefault();
+    
+    const values = {};
+    
+    [...event.target].forEach((item, i) => {
+      // if (item.name && item.value) values[item.name] = item.value;
+      if (item.name) values[item.name] = item.value;
+    });
+    
+    setEditMode(v => !v);
+    
+    console.log(container.current.data);
+    console.log(values);
+    console.log("change back");
+  }
+  
+  function onPlayHanler(event) { return event.target.volume = 0.05; }
   
   function renderTime() {
     if (percentage <= 0) {
@@ -85,15 +134,48 @@ function Card( props ) {
   return (
     <div className="card">
       <h1>{props.data.title}</h1>
-      <div className="card-body">
-        <Progress percentage={percentage} />
-        <div className="card-timer">
-          {
-            renderTime()
-          }
-        </div>
-        <button onClick={buttonHandler}>Remove</button>
-      </div>
+      {
+        !editMode 
+          ? (
+            <div className="card-body">
+              <Progress percentage={percentage} />
+              <div className="card-timer">
+                {
+                  renderTime()
+                }
+              </div>
+              <button onClick={buttonHandler}>Remove</button>
+              {
+                container.current.time > 0 && <button onClick={editHandler}>Edit</button>
+              }
+            </div>
+          )
+          : (
+            <div>
+              <form onSubmit={changeBack} >
+                <div>
+                  <label htmlFor={`title_${container.current.id}`}>Title</label>
+                </div>
+                <input 
+                  type="search" 
+                  id={`title_${container.current.id}`} 
+                  name="title" 
+                  placeholder={props.data.title}
+                />
+                
+                <div>
+                  <label htmlFor={`email_${container.current.id}`}>Add/Remove</label>
+                </div>
+                <input type="number" id={`email_${container.current.id}`} name="add" />
+
+                <div>
+                  <button type="submit">Confirm</button>
+                  <button type="submit">Cancel</button>
+                </div>
+              </form>
+            </div>
+          )
+      }
     </div>
   )
 }

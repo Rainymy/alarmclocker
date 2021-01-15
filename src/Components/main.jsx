@@ -24,13 +24,35 @@ function Main() {
     event.target.scrollLeft += event.deltaY / 4;
   }
   
-  function editCard(id) {
-    
-    const newTodos = { ...values }
-    delete newTodos[id];
-    setValues(newTodos);
-    
-    return;
+  const callbackParent = {
+    remove: (id) => {
+      const newTodos = { ...values }
+      delete newTodos[id];
+      setValues(newTodos);
+      
+      return;
+    },
+    getDataById: (id) => {
+      return new Promise(function(resolve, reject) {
+        if (values[id]) { resolve(values[id]); }
+        return reject([]);
+      });
+    },
+    changeDataWithId: (id, data) => {
+      setValues({ ...values, [id]: data });
+    }
+  }
+  
+  function removeAll() {
+    setValues({});
+  }
+  
+  function finishAll() {
+    let copy = {...values};
+    for (let id in copy) {
+      copy[id].isFinished = true;
+    }
+    setValues(copy);
   }
   
   return (
@@ -40,10 +62,14 @@ function Main() {
         {
           Object.values(values).map(v => {
             return (
-              <Card key={v.id} data={v} changeData={editCard}/>
+              <Card key={v.id} data={v} callbackParent={callbackParent}/>
             )
           })
         }
+      </section>
+      <section>
+        <button onClick={removeAll} >Remove All</button>
+        <button onClick={finishAll}>Finish all</button>
       </section>
     </main>
   );

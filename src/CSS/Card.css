@@ -6,6 +6,7 @@
   z-index: 1;
   background-color: lightgrey;
   min-width: var(--card-width);
+  max-width: var(--card-width);
   height: var(--card-height);
   
   margin: auto;

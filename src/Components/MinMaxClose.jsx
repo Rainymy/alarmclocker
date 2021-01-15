@@ -16,7 +16,7 @@ function MinMaxClose() {
   return (
     <div className="app-div">
       <div className="app-logo">
-        <img src="https:\/\/c0.klipartz.com/pngpicture/17/75/gratis-png-temporizador-iconos-de-computadora-reloj-cuenta-regresiva-minuto-reloj.png" alt="Logo" />
+        <img src="./logo192.png" alt="Logo" />
       </div>
       <div className="app-buttons" onClick={Minimize}>
         <span className="mini"></span>
