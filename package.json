@@ -1,6 +1,6 @@
 {
   "name": "alarmclocker",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "main": "public/electron.js",
   "private": true,
   "homepage": "./",
@@ -54,11 +54,10 @@
     "directories": {
       "buildResources": "assets"
     },
-    "target": [
-      {
-        "target": "nsis"
-      }
-    ]
+    "win": {
+      "target": "nsis",
+      "icon": "public/favicon.ico"
+    }
   },
   "devDependencies": {
     "electron": "^11.1.1",

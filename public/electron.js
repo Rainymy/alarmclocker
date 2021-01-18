@@ -12,7 +12,7 @@ let mainWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    // minWidth: 670,
+    minWidth: 500,
     width: isDev ? 1000: 500,
     height: isDev ? 750 : 500,
     frame: false,
@@ -35,7 +35,6 @@ const createWindow = () => {
 
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') { app.quit(); }
 });
@@ -46,14 +45,8 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on("close", () => {
-  mainWindow.close();
-});
-
-ipcMain.on("minimize", () => {
-  mainWindow.minimize();
-});
-
+ipcMain.on("close", () => { mainWindow.close(); });
+ipcMain.on("minimize", () => { mainWindow.minimize(); });
 ipcMain.on("maximize", (event, arg) => {
   mainWindow.setFullScreen(!mainWindow.isFullScreen());
   
