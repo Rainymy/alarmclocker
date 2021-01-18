@@ -5,7 +5,7 @@ import TimeDisplayer from "./timeDisplayer";
 import "../CSS/Card.css";
 import doneSound from "../sound/done.wav";
 
-export default function Card( props ) {
+function Card( props ) {
   
   const initialTime = props.data.time * 60;
   
@@ -82,47 +82,16 @@ export default function Card( props ) {
     props.callbackParent.remove(container.current.id);
   }
   
-  function changeLocalTimerData(data1) {
-    container.current.time += data1.time * 60;
-  }
-  
-  function combineData(from, addTo) {
-    let temp = {};
-    for (let base in from) {
-      if (addTo.hasOwnProperty(base)) {
-        temp[base] = typeof from[base] === "number" 
-          ? from[base] + addTo[base]
-          : addTo[base];
-          
-        continue;
-      }
-      if (base === "time") {
-        temp[base] = parseInt(addTo["add"]) | 0;
-          
-        continue;
-      }
-      temp[base] = from[base];
-    }
-    
-    return temp;
-  }
-  
-  async function editHandler(inputData) {
+  async function editHandler() {
     let data = await props.callbackParent.getDataById(container.current.id);
-    
     if (JSON.stringify(container.current.data) !== JSON.stringify(data)) {
-      if (typeof inputData === "object" && inputData !== null) {
-        container.current.data = data;
-      }
+      container.current.data = data;
     }
-    
-    if (editMode) {
-      const dataToChange = combineData(data, inputData);
-      changeLocalTimerData(dataToChange);
-      props.callbackParent.changeDataWithId(data.id, dataToChange);
+    if (data) {
+      setEditMode(v => !v);
     }
-    
-    setEditMode(v => !v);
+    // data.isFinished = true;
+    // props.callbackParent.changeDataWithId(data.id, data);
   }
   
   function changeBack(event) {
@@ -135,12 +104,10 @@ export default function Card( props ) {
       if (item.name) values[item.name] = item.value;
     });
     
-    let temp = {};
-    for (let value in values) {
-      if (values[value].length > 0) { temp[value] = values[value]; }
-    }
+    setEditMode(v => !v);
     
-    editHandler(temp);
+    console.log(container.current.data);
+    console.log(values);
     console.log("change back");
   }
   
@@ -212,3 +179,5 @@ export default function Card( props ) {
     </div>
   )
 }
+
+export default Card;
