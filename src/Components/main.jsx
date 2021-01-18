@@ -39,6 +39,14 @@ function Main() {
       });
     },
     changeDataWithId: (id, data) => {
+      if (!id) {
+        console.warn("ID is missing");
+        return;
+      }
+      if (typeof data !== "object" && data === null) {
+        console.warn("Data is missing");
+        return;
+      }
       setValues({ ...values, [id]: data });
     }
   }
